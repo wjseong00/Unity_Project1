@@ -67,7 +67,7 @@ public class PlayerFire : MonoBehaviour
             subPet2.SetActive(false);
         }
         //Fire();
-        FireRay();
+        //FireRay();
         //레이저를 보여준다
         //일정 시간이 지나면 레이저 보여주는기능비활성화
 
@@ -163,10 +163,10 @@ public class PlayerFire : MonoBehaviour
 
 
     //총알 발사
-    private void Fire()
+    public void Fire()
     {
         //마우스 왼쪽 버튼 or 왼쪽 컨트롤 키
-        if(Input.GetButtonDown("Fire1"))
+        //if(Input.GetButtonDown("Fire1"))
         {
             //총알공장(총알프리팹)에서 총알을 무한대로 찍어낼 수 있다.
             //Instantiate() 함수로 프리팹 파일을 게임오브젝트로 만든다.
@@ -178,6 +178,12 @@ public class PlayerFire : MonoBehaviour
         }
     }
 
-    
-
+    //버튼 클릭으로 공격 발사
+    public void OnFireButtonClikc()
+    {
+        //총알 게임오브젝트 생성
+        GameObject bullet = Instantiate(bulletFactory);
+        //총알 오브젝트의 위치 지정
+        bullet.transform.position = firePoint.transform.position;
+    }
 }

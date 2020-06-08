@@ -9,8 +9,9 @@ public class Enemy : MonoBehaviour
 
 
     public float speed = 10.0f;
-
-
+    public int killScore = 0;
+    
+    
 
     // Update is called once per frame
     void Update()
@@ -27,4 +28,6 @@ public class Enemy : MonoBehaviour
         //충돌된 오브젝트도 없앤다
         Destroy(gameObject);
         Destroy(collision.gameObject);
+        HighScore.instance.ScoreBoard();
+        
     }}
