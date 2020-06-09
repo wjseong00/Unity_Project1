@@ -42,8 +42,8 @@ public class ScoreManager : MonoBehaviour
         if(score >highScore)
         {
             highScore = score;
-            PlayerPrefs.SetInt(HighScore)) +highScore;
-            highScoreTxt.test = HighScore + hgihScore;
+            //PlayerPrefs.SetInt(HighScore)) +highScore;
+            //highScoreTxt.test = HighScore + hgihScore;
         }
     }
 
