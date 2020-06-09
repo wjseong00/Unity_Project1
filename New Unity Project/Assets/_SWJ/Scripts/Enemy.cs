@@ -27,8 +27,11 @@ public class Enemy : MonoBehaviour
         //자기자신도 없애고
         //충돌된 오브젝트도 없앤다
         Destroy(gameObject);
-        Destroy(collision.gameObject);
-
+        //Destroy(collision.gameObject);
+        if (collision.gameObject.name.Contains("Bullet"))
+        {
+            collision.gameObject.SetActive(false);
+        }
         //이펙트보여주기
         ShowEffect();
 
