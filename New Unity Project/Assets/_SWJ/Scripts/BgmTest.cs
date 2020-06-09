@@ -16,7 +16,6 @@ public class BgmTest : MonoBehaviour
         if(Input.GetKeyDown("1"))
         {
             BGMMgr.Instance.PlayBGM("bgm1");
-
         }
         if (Input.GetKeyDown("2"))
         {
