@@ -28,9 +28,17 @@ public class Enemy : MonoBehaviour
         //충돌된 오브젝트도 없앤다
         Destroy(gameObject);
         //Destroy(collision.gameObject);
+        //if (collision.gameObject.name.Contains("Bullet"))
+        //{
+        //    collision.gameObject.SetActive(false);
+        //}
         if (collision.gameObject.name.Contains("Bullet"))
         {
+            //충돌 오바젝트는 비활성화 시킨다
             collision.gameObject.SetActive(false);
+            //오브젝트풀에 추가만 해준다
+            PlayerFire pf = GameObject.Find("Player").GetComponent<PlayerFire>();
+            pf.bulletPool.Enqueue(collision.gameObject);
         }
         //이펙트보여주기
         ShowEffect();
@@ -41,7 +49,7 @@ public class Enemy : MonoBehaviour
     void ShowEffect()
     {
         GameObject fx = Instantiate(fxfactory);
-        fx.transform.position = transform.position;
+        fx.transform.position = transform.position - new Vector3(0,1.5f,0);
         Destroy(fx, 1.0f);
     }
 }
