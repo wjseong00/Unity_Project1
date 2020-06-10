@@ -71,6 +71,7 @@ MonoBehaviour:
   speed: 5
   killScore: 0
   fxfactory: {fileID: 100004, guid: a9d802bcc90c2d54da7c70cc7bb0e05f, type: 3}
+  beFactory: {fileID: 1845955007268882, guid: 0b9f25cded72d9b4abd0daa3755071b2, type: 3}
 --- !u!54 &3550060469417351900
 Rigidbody:
   m_ObjectHideFlags: 0

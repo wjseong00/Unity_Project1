@@ -36,12 +36,12 @@ public class HighScore : MonoBehaviour
 
     public void ScoreBoard()
     {
-        Debug.Log(killScore);
+        
         killScore++;
-        killScoreText.text = string.Format("CrrentScore:{0}\nHighScore : {1}", killScore.ToString("0000") ,highScore.ToString("0000"));
+        killScoreText.text = string.Format("Score:{0}\nHighScore : {1}", killScore.ToString("0000") ,highScore.ToString("0000"));
         if(highScore<=killScore)
         {
-            highScore++;
+            highScore= killScore;
         }
         PlayerPrefs.SetInt("HighS", highScore);
     }

@@ -12,6 +12,7 @@ public class BossCtrl : MonoBehaviour
     public GameObject bulletFactory;        //총알 프리팹
     public GameObject firePos;
     public GameObject playerRt;
+    public GameObject beFactory;
     public float curTime = 0;
     public float fireTime = 1;
 
@@ -100,5 +101,14 @@ public class BossCtrl : MonoBehaviour
 
         }
     }
-    
+    private void OnCollisionEnter(Collision collision)
+    {
+        if (collision.gameObject.name.Contains("Bullet"))
+        {
+            collision.gameObject.SetActive(false);
+            GameObject be = Instantiate(beFactory);
+            be.transform.position = collision.transform.position;
+            Destroy(be, 0.5f);
+        }
+    }
 }

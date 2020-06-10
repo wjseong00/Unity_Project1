@@ -9,7 +9,7 @@ public class PlayerFire : MonoBehaviour
     public GameObject subPet1;
     public GameObject subPet2;
     public GameObject firePoint;
-
+    public GameObject fxFactory;
     //레이저를 발사하기 위해서는 라인렌더러가 필요하다
     //선은 최소 2개의 점이 필요하다(시작점, 끝점)
     LineRenderer lr;     //라인렌더러 컴포넌트
@@ -33,9 +33,9 @@ public class PlayerFire : MonoBehaviour
     //1. 배열
     //GameObject[] bulletPool;
     //2. 리스트
-    //public List<GameObject> bulletPool;
-    //4. 튜
-    public Queue<GameObject> bulletPool;
+    public List<GameObject> bulletPool;
+    //4. 큐
+    //public Queue<GameObject> bulletPool;
 
 
     int count = 0;
@@ -69,22 +69,22 @@ public class PlayerFire : MonoBehaviour
         //    bulletPool[i] = bullet;
         //}
         //2.리스트
-        //bulletPool = new List<GameObject>();
-        //for (int i = 0; i < poolSize; i++)
-        //{
-        //    GameObject bullet = Instantiate(bulletFactory);
-        //    bullet.SetActive(false);
-        //    bulletPool.Add(bullet);
-        //}
-
-        //3.큐
-        bulletPool = new Queue<GameObject>();
+        bulletPool = new List<GameObject>();
         for (int i = 0; i < poolSize; i++)
         {
             GameObject bullet = Instantiate(bulletFactory);
             bullet.SetActive(false);
-            bulletPool.Enqueue(bullet);
+            bulletPool.Add(bullet);
         }
+
+        //3.큐
+        //bulletPool = new Queue<GameObject>();
+        //for (int i = 0; i < poolSize; i++)
+        //{
+        //    GameObject bullet = Instantiate(bulletFactory);
+        //    bullet.SetActive(false);
+        //    bulletPool.Enqueue(bullet);
+        //}
 
     }
 
@@ -124,7 +124,7 @@ public class PlayerFire : MonoBehaviour
             subPet2.SetActive(false);
         }
 
-        Fire();
+        //Fire();
         //FireRay();
         //레이저를 보여준다
         //일정 시간이 지나면 레이저 보여주는기능비활성화
@@ -156,7 +156,7 @@ public class PlayerFire : MonoBehaviour
     public void FireRay()
     {
         //마우스 왼쪽 버튼 or 왼쪽 컨트롤 키
-        if (Input.GetButtonDown("Fire1"))
+        //if (Input.GetButtonDown("Fire1"))
         {
             _audio.Play();
             curTime = 0;
@@ -195,13 +195,21 @@ public class PlayerFire : MonoBehaviour
                 //레이저의 끝점 지정
                 lr.SetPosition(1, hitInfo.point);
                 //충돌된 오브젝트 모두 지우기
-                Destroy(hitInfo.collider.gameObject);
-
-                //디스토리존의 탑과는 충돌처리 되지 않도록 한다.
-                if(hitInfo.collider.name != "Top")
+                if(hitInfo.collider.name.Contains("Enemy") || hitInfo.collider.name == "Boss")
                 {
                     Destroy(hitInfo.collider.gameObject);
+                    GameObject fx = Instantiate(fxFactory);
+                    fx.transform.position = hitInfo.point ;
+                    HighScore.instance.ScoreBoard();
+                    Destroy(fx, 1.0f);
                 }
+               
+
+                //디스토리존의 탑과는 충돌처리 되지 않도록 한다.
+                //if (hitInfo.collider.name != "Top")
+                //{
+                //    Destroy(hitInfo.collider.gameObject);
+                //}
 
                 //충돌된 에너미 오브젝트 삭제
                 //Contains("Enemy") => Enemy(clone) 이런것도포함함
@@ -261,20 +269,20 @@ public class PlayerFire : MonoBehaviour
             //    bulletPool.Add(bullet);
             //}
             //3. 큐
-           if(bulletPool.Count>0)
-            {
-                GameObject bullet = bulletPool.Dequeue();
-                bullet.SetActive(true);
-                bullet.transform.position = firePoint.transform.position;
-                bullet.transform.up = firePoint.transform.up;
-            }
-            else
-            {
-                GameObject bullet = Instantiate(bulletFactory);
-                bullet.SetActive(false);
-                //생성된 총알 오브젝트를 물에 담는다
-                bulletPool.Enqueue(bullet);
-            }
+           //if(bulletPool.Count>0)
+           // {
+           //     GameObject bullet = bulletPool.Dequeue();
+           //     bullet.SetActive(true);
+           //     bullet.transform.position = firePoint.transform.position;
+           //     bullet.transform.up = firePoint.transform.up;
+           // }
+           // else
+           // {
+           //     GameObject bullet = Instantiate(bulletFactory);
+           //     bullet.SetActive(false);
+           //     //생성된 총알 오브젝트를 물에 담는다
+           //     bulletPool.Enqueue(bullet);
+           // }
 
 
             //총알공장(총알프리팹)에서 총알을 무한대로 찍어낼 수 있다.
@@ -291,11 +299,16 @@ public class PlayerFire : MonoBehaviour
     public void OnFireButtonClikc()
     {
         //총알 게임오브젝트 생성
-        GameObject bullet = Instantiate(bulletFactory);
+        //GameObject bullet = Instantiate(bulletFactory);
         //총알 오브젝트의 위치 지정
-        bullet.transform.position = firePoint.transform.position;
-
-        SceneMgr.instance.LoadScene("startScene");
+        //bullet.transform.position = firePoint.transform.position;
+        //2. 리스트 오브젝트풀링으로 총알발사
+        bulletPool[fireIndex].SetActive(true);
+        bulletPool[fireIndex].transform.position = firePoint.transform.position;
+        bulletPool[fireIndex].transform.up = firePoint.transform.up;
+        fireIndex++;
+        if (fireIndex >= poolSize) fireIndex = 0;
+        //SceneMgr.instance.LoadScene("startScene");
 
     }
 }
