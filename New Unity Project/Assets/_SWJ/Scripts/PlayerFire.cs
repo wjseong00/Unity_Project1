@@ -10,6 +10,7 @@ public class PlayerFire : MonoBehaviour
     public GameObject subPet2;
     public GameObject firePoint;
     public GameObject fxFactory;
+    public GameObject laserFactory;
     //레이저를 발사하기 위해서는 라인렌더러가 필요하다
     //선은 최소 2개의 점이 필요하다(시작점, 끝점)
     LineRenderer lr;     //라인렌더러 컴포넌트
@@ -189,21 +190,41 @@ public class PlayerFire : MonoBehaviour
             lr.SetPosition(0, transform.position);
             //라인의 끝점은 충돌된 지점으로 변경한다.
             Ray ray = new Ray(transform.position, Vector3.up);
+            int _layerMask = 1 << LayerMask.NameToLayer("Enemy")| 1 << LayerMask.NameToLayer("Boss");
+            
+
             RaycastHit hitInfo; //Ray의 충돌된 오브젝트의 정보를 담는다.
-            if(Physics.Raycast(ray,out hitInfo))
+            if(Physics.Raycast(ray,out hitInfo, 100f,_layerMask ))
             {
+
                 //레이저의 끝점 지정
+
+
+
                 lr.SetPosition(1, hitInfo.point);
+
                 //충돌된 오브젝트 모두 지우기
-                if(hitInfo.collider.name.Contains("Enemy") || hitInfo.collider.name == "Boss")
+                if (hitInfo.collider.name.Contains("Enemy"))
                 {
+                    
+                    GameObject sx = Instantiate(laserFactory);
+                    sx.transform.position = hitInfo.point;
+                    Destroy(sx, 0.5f);
                     Destroy(hitInfo.collider.gameObject);
                     GameObject fx = Instantiate(fxFactory);
                     fx.transform.position = hitInfo.point ;
                     HighScore.instance.ScoreBoard();
                     Destroy(fx, 1.0f);
                 }
-               
+                else if(hitInfo.collider.name == "Boss")
+                {
+                    
+                    BossHp.instance.BossHit();
+                    GameObject sx = Instantiate(laserFactory);
+                    sx.transform.position = hitInfo.point;
+                    Destroy(sx, 0.5f);
+                }
+                
 
                 //디스토리존의 탑과는 충돌처리 되지 않도록 한다.
                 //if (hitInfo.collider.name != "Top")
@@ -311,4 +332,5 @@ public class PlayerFire : MonoBehaviour
         //SceneMgr.instance.LoadScene("startScene");
 
     }
+    
 }

@@ -13,17 +13,16 @@ public class BossCtrl : MonoBehaviour
     public GameObject firePos;
     public GameObject playerRt;
     public GameObject beFactory;
+ 
     public float curTime = 0;
     public float fireTime = 1;
 
     public float fireTime1 = 1.5f;     //1.5초에 한번씩 총알 발사
     public float curTime1 =0.0f;
     public int bulletMax = 10;
-    // Start is called before the first frame update
-    void Start()
-    {
-        
-    }
+    
+    
+
 
     // Update is called once per frame
     void Update()
@@ -105,6 +104,7 @@ public class BossCtrl : MonoBehaviour
     {
         if (collision.gameObject.name.Contains("Bullet"))
         {
+            BossHp.instance.BossHit();
             collision.gameObject.SetActive(false);
             GameObject be = Instantiate(beFactory);
             be.transform.position = collision.transform.position;

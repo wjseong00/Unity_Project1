@@ -15,7 +15,7 @@ GameObject:
   - component: {fileID: 3116509933855034775}
   - component: {fileID: 4712753211655270674}
   m_Layer: 13
-  m_Name: BossBullet
+  m_Name: B_Bullet
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -215,6 +215,10 @@ PrefabInstance:
     - target: {fileID: 122648, guid: 66e0018a9e63c4348b7a340890e5b30c, type: 3}
       propertyPath: m_Name
       value: SingleLine-TextureAdditive
+      objectReference: {fileID: 0}
+    - target: {fileID: 122648, guid: 66e0018a9e63c4348b7a340890e5b30c, type: 3}
+      propertyPath: m_Layer
+      value: 13
       objectReference: {fileID: 0}
     - target: {fileID: 436056, guid: 66e0018a9e63c4348b7a340890e5b30c, type: 3}
       propertyPath: m_LocalPosition.x

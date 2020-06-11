@@ -8,7 +8,8 @@ public class PlayerMove : MonoBehaviour
     //플레이어 이동
     public float speed = 5.0f;      //플레이어 이동속도
     public Vector2 margin;          //뷰포트좌표는 0.0f~1.0f 사이의 값
-
+    public Vector3 startLocation;
+    float curTime = 0;
     //조이스틱 사용하기
     public VariableJoystick joystick;   //조이스틱
     
@@ -16,6 +17,7 @@ public class PlayerMove : MonoBehaviour
     void Start()
     {
         margin = new Vector2(0.08f, 0.05f);
+        startLocation = this.transform.position;
     }
 
     // Update is called once per frame
@@ -72,4 +74,12 @@ public class PlayerMove : MonoBehaviour
         transform.position = Camera.main.ViewportToWorldPoint(position);
 
     }
+    private void OnCollisionEnter(Collision collision)
+    {
+        this.gameObject.SetActive(false);
+        this.gameObject.SetActive(true);
+        gameObject.transform.position = startLocation;
+
+    }
+    
 }
