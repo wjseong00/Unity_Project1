@@ -11,10 +11,13 @@ public class EnemyManager : MonoBehaviour
     //에너미 스폰위치
 
     public GameObject enemyFactory;     //에너미 공장(에너미프리팹)
+    public GameObject itemEnemyFactory; //아이템 가진 에너미
     //public GameObject spawnPoint;       //스폰위치
     public GameObject[] spawnPoints;       //스폰위치 여러개
     float spawnTime = 1.0f;                    //스폰타임 (몇초에 한번씩 찍어낼거냐?)
+    float itemSpawnTime = 6.0f;                
     float curTime=0.0f;                      //누적타임
+    float itemCurTime = 0.0f;
 
     
 
@@ -48,6 +51,24 @@ public class EnemyManager : MonoBehaviour
             //enemy.transform.position = transform.GetChild(index).transform.position;
             enemy.transform.position = spawnPoints[index].transform.position;
             
+        }
+        itemCurTime += Time.deltaTime;
+        if (itemCurTime > itemSpawnTime)
+        {
+            //누적된 현재시간을 0.0초로 초기화(반드시 해줘야 한다)
+            itemCurTime = 0.0f;
+
+            //스폰타임을 랜덤으로
+            itemSpawnTime = Random.Range(6.0f, 7.0f);
+
+
+            //에너미 생성
+            GameObject itemEnemy = Instantiate(itemEnemyFactory);
+            //enemy.transform.position = spawnPoint.transform.position;
+            int index1 = Random.Range(0, spawnPoints.Length);
+            //enemy.transform.position = transform.GetChild(index).transform.position;
+            itemEnemy.transform.position = spawnPoints[index1].transform.position;
+
         }
     }
 }

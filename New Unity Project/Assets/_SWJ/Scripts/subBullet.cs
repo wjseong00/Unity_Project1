@@ -9,6 +9,12 @@ public class subBullet : MonoBehaviour
     public GameObject firePoint;
 
     bool shoot = true;
+    int fireIndex = 0;
+    int poolSize = 20;
+    //1. 배열
+    //GameObject[] bulletPool;
+    //2. 리스트
+    public List<GameObject> bulletPool;
     // Start is called before the first frame update
     private void OnEnable()
     {
@@ -17,7 +23,14 @@ public class subBullet : MonoBehaviour
     void Start()
     {
         //StartCoroutine("subFire");
-        
+        bulletPool = new List<GameObject>();
+        for (int i = 0; i < poolSize; i++)
+        {
+            GameObject bullet = Instantiate(bulletFactory, GameObject.Find("SubBullet").transform);
+            bullet.SetActive(false);
+            bulletPool.Add(bullet);
+        }
+
     }
 
     // Update is called once per frame
@@ -34,9 +47,11 @@ public class subBullet : MonoBehaviour
     {
         shoot = false;
 
-        GameObject bullet = Instantiate(bulletFactory);
-        //총알 오브젝트의 위치 지정
-        bullet.transform.position = firePoint.transform.position;
+        bulletPool[fireIndex].SetActive(true);
+        bulletPool[fireIndex].transform.position = firePoint.transform.position;
+        bulletPool[fireIndex].transform.up = firePoint.transform.up;
+        fireIndex++;
+        if (fireIndex >= poolSize) fireIndex = 0;
         yield return new WaitForSeconds(0.5f);
 
         shoot = true;

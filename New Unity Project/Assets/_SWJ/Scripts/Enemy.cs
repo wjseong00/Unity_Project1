@@ -31,6 +31,7 @@ public class Enemy : MonoBehaviour
         if (collision.gameObject.name.Contains("Bullet"))
         {
             collision.gameObject.SetActive(false);
+            HighScore.instance.ScoreBoard();
             GameObject be = Instantiate(beFactory);
             be.transform.position = collision.transform.position;
             Destroy(be, 0.5f);
@@ -50,7 +51,7 @@ public class Enemy : MonoBehaviour
         //이펙트보여주기
         ShowEffect();
 
-        HighScore.instance.ScoreBoard();
+        
         
     }
     void ShowEffect()

@@ -13,14 +13,14 @@ public class BossCtrl : MonoBehaviour
     public GameObject firePos;
     public GameObject playerRt;
     public GameObject beFactory;
- 
+    public Animator anim;
     public float curTime = 0;
     public float fireTime = 1;
 
     public float fireTime1 = 1.5f;     //1.5초에 한번씩 총알 발사
     public float curTime1 =0.0f;
     public int bulletMax = 10;
-    
+
     
 
 
@@ -40,10 +40,12 @@ public class BossCtrl : MonoBehaviour
             curTime += Time.deltaTime;
             if (curTime > fireTime)
             {
+                
                 //총알 공장에서 총알 생성
                 GameObject bullet = Instantiate(bulletFactory);
                 //총알 생성 위치
                 bullet.transform.position = transform.position;
+                anim.SetTrigger("stun");
                 //플레이어를 향하는 방향 구하기(벡터의 뺄샘)
                 Vector3 dir = playerRt.transform.position - transform.position;
                 dir.Normalize();
@@ -90,7 +92,8 @@ public class BossCtrl : MonoBehaviour
             curTime = 0.0f;
 
 
-
+            
+            
             Quaternion rot = Quaternion.LookRotation(playerRt.transform.position - firePos.transform.position);
             firePos.transform.rotation =rot*Quaternion.Euler(90,0,0);
             GameObject bullet = Instantiate(bulletFactory,firePos.transform.position,firePos.transform.rotation);

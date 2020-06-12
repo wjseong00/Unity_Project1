@@ -8,6 +8,7 @@ public class BossMgr : MonoBehaviour
     public GameObject boss;
     private void Start()
     {
+       
         bg = GameObject.Find("BackGround").GetComponent<MeshRenderer>().material;
     }
     private void Update()

@@ -33,6 +33,14 @@ public class HighScore : MonoBehaviour
     {
         
     }
+    public void ResetScore()
+    {
+        killScore = 0;
+        killScoreText.text = string.Format("{0}", killScore.ToString("0000"));
+        HighScoreText.text = string.Format("{0}", highScore.ToString("0000"));
+    }
+    
+    
 
     public void ScoreBoard()
     {

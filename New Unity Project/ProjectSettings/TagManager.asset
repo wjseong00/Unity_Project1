@@ -3,7 +3,9 @@
 --- !u!78 &1
 TagManager:
   serializedVersion: 2
-  tags: []
+  tags:
+  - ItemEnemy
+  - Enemy
   layers:
   - Default
   - TransparentFX
@@ -19,8 +21,8 @@ TagManager:
   - DestroyZone
   - Boss
   - B_Bullet
-  - 
-  - 
+  - Item
+  - subPlayer
   - 
   - 
   - 

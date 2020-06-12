@@ -12,6 +12,8 @@ public class PlayerMove : MonoBehaviour
     float curTime = 0;
     //조이스틱 사용하기
     public VariableJoystick joystick;   //조이스틱
+
+    public GameObject exfactory;
     
     // Start is called before the first frame update
     void Start()
@@ -76,10 +78,23 @@ public class PlayerMove : MonoBehaviour
     }
     private void OnCollisionEnter(Collision collision)
     {
-        this.gameObject.SetActive(false);
-        this.gameObject.SetActive(true);
-        gameObject.transform.position = startLocation;
+        if (collision.gameObject.name.Contains("strawberry"))
+        {
+            Destroy(collision.gameObject);
 
+        }
+        else
+        {
+            this.gameObject.SetActive(false);
+            HighScore.instance.ResetScore();
+            GameObject efx = Instantiate(exfactory);
+            efx.transform.position = this.transform.position - new Vector3(0, 1.0f, 0);
+            Destroy(efx, 1.0f);
+            this.gameObject.SetActive(true);
+            gameObject.transform.position = startLocation;
+        }
+        
+        
     }
     
 }
